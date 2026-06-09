@@ -215,9 +215,7 @@ class PomodoroTimerApp:
 
     def skip_timer(self):
         """タイマーをスキップ"""
-        if self.is_work_time:
-            # 仕事時間が完了したものとして扱う
-            self.on_work_complete()
+        # スキップ時はポイントを付与しない（実作業ではないため）
         self.is_work_time = not self.is_work_time
         self.time_remaining = (
             self.break_time if not self.is_work_time else self.work_time

@@ -299,7 +299,6 @@ class GamificationEngine:
         if (
             self.streak_tracker.current_streak >= 3
             and not self.badge_system.has_badge(Badge.THREE_DAY_STREAK)
-            and self.streak_tracker.record_pomodoro() is not None
         ):
             if self.badge_system.add_badge(Badge.THREE_DAY_STREAK):
                 new_badges.append(Badge.THREE_DAY_STREAK)
