@@ -4,8 +4,7 @@
 """
 
 import tempfile
-import json
-from gamification import GamificationEngine, Badge
+from gamification import GamificationEngine
 from data_manager import DataManager
 
 
