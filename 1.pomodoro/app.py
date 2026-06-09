@@ -4,8 +4,6 @@
 
 import tkinter as tk
 from tkinter import ttk, messagebox
-import threading
-import time
 from datetime import datetime
 from gamification import GamificationEngine, Badge
 from data_manager import DataManager
@@ -39,7 +37,7 @@ class PomodoroTimerApp:
         self.is_running = False
         self.is_work_time = True
         self.time_remaining = self.work_time
-        self.timer_thread = None
+        self.timer_job = None
         self.sessions_completed = 0
 
         # UI構築
@@ -192,20 +190,23 @@ class PomodoroTimerApp:
             self.is_running = True
             self.start_button.config(state=tk.DISABLED)
             self.pause_button.config(state=tk.NORMAL)
-
-            # タイマースレッドを開始
-            self.timer_thread = threading.Thread(target=self.timer_loop, daemon=True)
-            self.timer_thread.start()
+            self.timer_loop()
 
     def pause_timer(self):
         """タイマーを一時停止"""
         self.is_running = False
+        if self.timer_job is not None:
+            self.root.after_cancel(self.timer_job)
+            self.timer_job = None
         self.start_button.config(state=tk.NORMAL)
         self.pause_button.config(state=tk.DISABLED)
 
     def reset_timer(self):
         """タイマーをリセット"""
         self.is_running = False
+        if self.timer_job is not None:
+            self.root.after_cancel(self.timer_job)
+            self.timer_job = None
         self.is_work_time = True
         self.time_remaining = self.work_time
         self.sessions_completed = 0
@@ -216,6 +217,9 @@ class PomodoroTimerApp:
     def skip_timer(self):
         """タイマーをスキップ"""
         # スキップ時はポイントを付与しない（実作業ではないため）
+        if self.timer_job is not None:
+            self.root.after_cancel(self.timer_job)
+            self.timer_job = None
         self.is_work_time = not self.is_work_time
         self.time_remaining = (
             self.break_time if not self.is_work_time else self.work_time
@@ -227,27 +231,30 @@ class PomodoroTimerApp:
 
     def timer_loop(self):
         """タイマーループ"""
-        while self.is_running:
-            if self.time_remaining > 0:
-                self.time_remaining -= 1
-                self.update_display()
-                time.sleep(1)
+        if not self.is_running:
+            return
+
+        if self.time_remaining > 0:
+            self.time_remaining -= 1
+            self.update_display()
+        else:
+            # タイマー完了
+            if self.is_work_time:
+                self.on_work_complete()
             else:
-                # タイマー完了
-                if self.is_work_time:
-                    self.on_work_complete()
-                else:
-                    self.on_break_complete()
+                self.on_break_complete()
 
-                # 次のセッションに切り替え
-                self.is_work_time = not self.is_work_time
-                self.time_remaining = (
-                    self.break_time if not self.is_work_time else self.work_time
-                )
-                self.update_display()
+            # 次のセッションに切り替え
+            self.is_work_time = not self.is_work_time
+            self.time_remaining = (
+                self.break_time if not self.is_work_time else self.work_time
+            )
+            self.update_display()
 
-                # ビープ音を出す（簡易版）
-                self.root.bell()
+            # ビープ音を出す（簡易版）
+            self.root.bell()
+
+        self.timer_job = self.root.after(1000, self.timer_loop)
 
     def on_work_complete(self):
         """仕事時間完了時の処理"""
