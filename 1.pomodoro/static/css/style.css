@@ -1,9 +1,129 @@
-/* Pomodoro Timer - Step 1 placeholder */
+/* Pomodoro Timer - UI Enhancements */
 body {
   margin: 0;
   font-family: sans-serif;
+  background-color: #1a1a2e;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+#background-effects {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  animation-name: float;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0) scale(1); opacity: 0; }
+  50% { opacity: 0.5; }
+  100% { transform: translateY(-100px) scale(0); opacity: 0; }
+}
+
+.ripple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  animation: ripple-anim 2s infinite cubic-bezier(0.1, 0.8, 0.3, 1);
+}
+
+@keyframes ripple-anim {
+  0% { width: 200px; height: 200px; opacity: 1; }
+  100% { width: 600px; height: 600px; opacity: 0; }
 }
 
 .container {
-  padding: 2rem;
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2rem 3rem;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+h1 {
+  margin-top: 0;
+  font-weight: 300;
+  letter-spacing: 2px;
+}
+
+.timer-wrapper {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 2rem auto;
+}
+
+.progress-ring {
+  transform: rotate(-90deg);
+}
+
+.progress-ring__background {
+  stroke: rgba(255, 255, 255, 0.1);
+}
+
+.progress-ring__circle {
+  stroke: #4facfe; /* Default Blue */
+  transition: stroke-dashoffset 0.1s linear, stroke 0.5s ease;
+}
+
+.timer-display {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.phase-display {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.controls button {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: white;
+  padding: 10px 20px;
+  margin: 0 5px;
+  border-radius: 50px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.controls button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.controls button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
