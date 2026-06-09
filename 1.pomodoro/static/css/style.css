@@ -150,7 +150,7 @@ body {
 }
 
 .settings-close:hover {
-  background-color: darken(var(--color-primary), 10%);
+  filter: brightness(0.85);
 }
 
 /* Responsive */
@@ -162,10 +162,7 @@ body {
   .main-content {
     flex-direction: column;
   }
-}
-
-/* Overlay for mobile */
-@media (max-width: 768px) {
+  
   .settings-panel::before {
     content: '';
     position: fixed;

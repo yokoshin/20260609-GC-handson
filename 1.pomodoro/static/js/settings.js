@@ -28,7 +28,7 @@ class SettingsUI {
     // Toggle panel
     this.settingsToggle.addEventListener('click', () => this.togglePanel());
     this.settingsClose.addEventListener('click', () => this.closePanel());
-    
+      
     // Settings changes
     this.workDurationSelect.addEventListener('change', () => this.saveSettings());
     this.breakDurationSelect.addEventListener('change', () => this.saveSettings());
@@ -36,11 +36,12 @@ class SettingsUI {
     this.soundStartCheckbox.addEventListener('change', () => this.saveSettings());
     this.soundEndCheckbox.addEventListener('change', () => this.saveSettings());
     this.soundTickCheckbox.addEventListener('change', () => this.saveSettings());
-    
+      
     // Close panel when clicking outside
     document.addEventListener('click', (event) => {
       if (!this.settingsPanel.contains(event.target) && 
-          !this.settingsToggle.contains(event.target)) {
+          !this.settingsToggle.contains(event.target) &&
+          !this.settingsPanel.classList.contains('hidden')) {
         this.closePanel();
       }
     });

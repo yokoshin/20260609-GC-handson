@@ -40,6 +40,10 @@ class SettingsManager:
         
         return self._settings
     
+    def reset_cache(self):
+        """Reset the cached settings. Useful for testing."""
+        self._settings = None
+    
     def save(self, settings: Settings) -> bool:
         """Save settings to file.
         

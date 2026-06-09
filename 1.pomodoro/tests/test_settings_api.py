@@ -21,7 +21,7 @@ def temp_config_dir():
 def reset_settings_manager():
     """Reset settings manager cache between tests."""
     yield
-    settings_manager._settings = None
+    settings_manager.reset_cache()
 
 
 class TestSettingsManager:
