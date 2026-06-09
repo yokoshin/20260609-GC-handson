@@ -7,9 +7,76 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
 <body>
-  <div class="container">
-    <h1>ポモドーロタイマー</h1>
-    <p>準備中です。</p>
+  <div class="container" id="app">
+    <header class="header">
+      <h1>ポモドーロタイマー</h1>
+      <button id="settings-toggle" class="settings-toggle">⚙️</button>
+    </header>
+
+    <main class="main-content">
+      <!-- Settings Panel -->
+      <aside id="settings-panel" class="settings-panel hidden">
+        <h2>設定</h2>
+        
+        <div class="settings-group">
+          <label for="work-duration">作業時間 (分)</label>
+          <select id="work-duration">
+            <option value="15">15分</option>
+            <option value="25" selected>25分</option>
+            <option value="35">35分</option>
+            <option value="45">45分</option>
+          </select>
+        </div>
+
+        <div class="settings-group">
+          <label for="break-duration">休憩時間 (分)</label>
+          <select id="break-duration">
+            <option value="5" selected>5分</option>
+            <option value="10">10分</option>
+            <option value="15">15分</option>
+          </select>
+        </div>
+
+        <div class="settings-group">
+          <label for="theme">テーマ</label>
+          <select id="theme">
+            <option value="light" selected>ライト</option>
+            <option value="dark">ダーク</option>
+            <option value="focus">フォーカス</option>
+          </select>
+        </div>
+
+        <div class="settings-group">
+          <label>
+            <input type="checkbox" id="sound-start" checked>
+            開始音
+          </label>
+        </div>
+
+        <div class="settings-group">
+          <label>
+            <input type="checkbox" id="sound-end" checked>
+            終了音
+          </label>
+        </div>
+
+        <div class="settings-group">
+          <label>
+            <input type="checkbox" id="sound-tick">
+            ティック音
+          </label>
+        </div>
+
+        <button id="settings-close" class="settings-close">閉じる</button>
+      </aside>
+
+      <!-- Timer Content -->
+      <div class="timer-content">
+        <p>準備中です。</p>
+      </div>
+    </main>
   </div>
+
+  <script src="{{ url_for('static', filename='js/settings.js') }}"></script>
 </body>
 </html>
