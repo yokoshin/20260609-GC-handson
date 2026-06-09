@@ -7,9 +7,23 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
 <body>
+  <div id="background-effects"></div>
   <div class="container">
     <h1>ポモドーロタイマー</h1>
-    <p>準備中です。</p>
+    <div class="timer-wrapper">
+      <svg class="progress-ring" width="200" height="200">
+        <circle class="progress-ring__background" stroke-width="8" fill="transparent" r="90" cx="100" cy="100" />
+        <circle class="progress-ring__circle" stroke-width="8" fill="transparent" r="90" cx="100" cy="100" stroke-linecap="round" />
+      </svg>
+      <div class="timer-display" id="time-display">25:00</div>
+    </div>
+    <div class="phase-display" id="phase-display">作業中</div>
+    <div class="controls">
+      <button id="start-btn">開始</button>
+      <button id="pause-btn" disabled>一時停止</button>
+      <button id="reset-btn">リセット</button>
+    </div>
   </div>
+  <script src="{{ url_for('static', filename='js/timer.js') }}"></script>
 </body>
 </html>
