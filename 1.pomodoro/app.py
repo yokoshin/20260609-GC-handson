@@ -254,7 +254,10 @@ class PomodoroTimerApp:
             # ビープ音を出す（簡易版）
             self.root.bell()
 
-        self.timer_job = self.root.after(1000, self.timer_loop)
+        if self.is_running:
+            self.timer_job = self.root.after(1000, self.timer_loop)
+        else:
+            self.timer_job = None
 
     def on_work_complete(self):
         """仕事時間完了時の処理"""
